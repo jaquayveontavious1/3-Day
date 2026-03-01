@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Sprint History - 3-Day Builder</title>
+    <style>
+        body { font-family: Arial; margin:0; padding: 30px; background: #f5f7fa; }
+        table { width:100%; border-collapse: collapse; background: white; border-radius: 12px; overflow:hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        th, td { padding: 15px; text-align:left; }
+        th { background:#2ecc71; color:white; }
+        tr:nth-child(even) { background:#f9f9f9; }
+        .pagination a { margin:0 5px; text-decoration:none; padding:6px 10px; background:#ddd; border-radius:4px; color:black; }
+        .buttons { margin-top:20px; }
+        .btn { padding:10px 15px; border:none; border-radius:6px; background:black; color:white; text-decoration:none; }
+    </style>
+</head>
+<body>
+    <h1>My Sprint History - {{user.username}} </h1>
+
+    <table>
+        <tr>
+            <th>Sprint Title</th>
+            <th>Sprints Completed</th>
+            <th>Status</th>
+            <th>Completed At</th>
+        </tr>
+        {% for sprint in page_obj %}
+        <tr>
+            <td>{{ sprint.title }}</td>
+            <td>{{ sprint.completed }} / {{ sprint.total }}</td>
+            <td>{{ sprint.status }}</td>
+            <td>{{ sprint.completed_at|date:"M d, Y H:i" }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">You have no completed sprints yet.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </div>
+
+    <div class="buttons">
+        <a href="{% url 'dashboard' %}" class="btn">Back to Dashboard</a>
+    </div>
+</body>
+</html>

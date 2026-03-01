@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Create Sprint</title>
+        <style>
+            body { font-family: Arial; background-color: #E6F5EA; padding: 40px; }
+            .container { max-width: 600px; margin: auto; background: white; padding: 30px; border-radius: 10px; }
+            input { width: 100%; padding: 10px; margin-bottom: 15px; }
+            button { background: #43A047; color: white; padding: 10px; border: none; border-radius: 6px; width: 100%; cursor: pointer; }
+            button:hover { background: #2E7D32; }
+        </style>
+    </head>
+    <body>
+
+    <div class="container">
+        <h2>Start 3-Day Builder Sprint</h2>
+
+        <form method="post">
+            {% csrf_token %}
+
+            <input type="text" name="title" placeholder="Sprint Title" required>
+
+            <input type="text" name="goal1" placeholder="Goal 1" required>
+            <input type="text" name="goal2" placeholder="Goal 2" required>
+            <input type="text" name="goal3" placeholder="Goal 3" required>
+
+            <button type="submit">Start Sprint</button>
+        </form>
+    </div>
+
+    </body>
+</html>

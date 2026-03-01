@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>3-Day Builder Dashboard</title>
+    {% load session_tags %}
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background: #f5f7fa;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: black;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .navbar a:hover {
+            text-decoration: underline;
+        }
+
+        /* MAIN CONTENT */
+        .container {
+            padding: 40px;
+        }
+
+        h1 {
+            font-size: 36px;
+            margin-bottom: 30px;
+        }
+
+        /* TABLE */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+        }
+
+        th {
+            background: #2ecc71;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+
+        /* PAGINATION */
+        .pagination {
+            margin-top: 20px;
+        }
+
+        .pagination a {
+            margin: 0 5px;
+            text-decoration: none;
+            padding: 6px 10px;
+            background: #ddd;
+            border-radius: 4px;
+            color: black;
+        }
+
+        .pagination span {
+            margin: 0 10px;
+        }
+
+        /* BUTTONS */
+        .buttons {
+            margin-top: 40px;
+            display: flex;
+            gap: 20px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .primary {
+            background: black;
+            color: white;
+        }
+
+        .secondary {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        /* CONGRATS MESSAGE */
+        #congrats-message {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #2ecc71;
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 1000;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="navbar">
+    <div>🚀 3-Day Builder</div>
+    <div>
+        <a href="{% url 'sprint_history'%}" >Sprint History</a>
+        <a href="{% url 'logout' %}">Logout</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Welcome to 3-Day Builder - {{user.username}}</h1>
+
+    <table>
+        <tr>
+            <th>User</th>
+            <th>Sprint Title</th>
+            <th>Sprints Completed</th>
+            <th>Status</th>
+        </tr>
+
+        {% for sprint in page_obj %}
+        <tr id="sprint-row-{{ sprint.id }}">
+            <td>{{ sprint.user }}</td>
+            <td>{{ sprint.title }}</td>
+            <td>{{ sprint.completed }} / {{sprint.total}}</td>
+            <td>{{ sprint.status }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No active sprints available.</td>
+        </tr>
+        {% endfor %}
+    </table>
+    
+    <div class="pagination">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; First</a>
+            <a href="?page={{ page_obj.previous_page_number }}">Previous</a>
+        {% endif %}
+
+        <span>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">Last &raquo;</a>
+        {% endif %}
+    </div>
+
+    <div class="buttons">
+        <a href="{% url 'create'%}"><button class="btn primary">Start Your Own Sprint</button></a>
+        <a href=" {% url 'leaderboard'%}"><button class="btn secondary">Community Leaderboard</button></a>
+        <a href="{% url 'update_my_sprint' %}">
+            <button class="btn secondary">Update My Sprint</button>
+        </a>
+    </div>
+</div>
+
+<!-- Congratulation Message -->
+<div id="congrats-message">🎉 Congratulations! You just completed your sprint!</div>
+
+    <script>
+        {% if sprint_completed_id %}
+            let msg = document.getElementById('congrats-message');
+            msg.style.display = 'block';
+
+            // Fade out message
+            setTimeout(() => {
+                msg.style.transition = "all 1s ease";
+                msg.style.opacity = "0";
+                msg.style.transform = "translateY(-50px)";
+                setTimeout(() => msg.remove(), 1000);
+            }, 4000);
+
+            // Animate sprint row removal
+            let sprintId = {{ sprint_completed_id }};
+            let row = document.getElementById('sprint-row-' + sprintId);
+            if (row) {
+                row.style.transition = "all 1s ease";
+                row.style.opacity = "0";
+                row.style.height = "0px";
+                row.style.padding = "0px";
+                setTimeout(() => row.remove(), 1000);
+            }
+        {% endif %}
+    </script>
+
+    
+
+
+</body>
+</html>

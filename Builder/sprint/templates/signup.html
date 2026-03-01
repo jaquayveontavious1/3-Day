@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        {% load static%}
+        <title>Sign Up - 3-Day Builder Sprint</title>
+        <style>
+            body::before{
+                content:"";
+                position:absolute;
+                inset:0;
+                 background: url("{% static 'images/background.webp' %}") no-repeat center center/cover;
+                filter: blur(1.2px);
+                transform: scale(1.1); /* prevents blur edges */
+                z-index: -1;
+            }
+            body { font-family: Arial; background-color: #E6F5EA; display: flex; justify-content: center; align-items: center; height: 100vh; }
+            .signup-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
+            input { width: 100%; padding: 10px; margin: 10px 0; }
+            button { background: #43A047; color: white; padding: 10px; width: 100%; border: none; border-radius: 4px; cursor: pointer; }
+            button:hover { background: #2E7D32; }
+            .login-link {
+                color: #2ecc71;
+                font-weight: bold;
+                text-decoration: none;
+            }
+
+            .login-link:hover {
+                text-decoration: underline;
+            }
+            .brand {
+                
+                font-weight:bold;
+                margin-bottom:10px;
+                font-size:26px;
+            
+            }
+        </style>
+    </head>
+    <body>
+        <div class="signup-box">
+            <div class="brand">
+                🚀 <span>3-Day Builder Sprint</span>
+            </div>
+            <h3>Create Account</h3>
+            <p class="subtitle">Start your 3-day execution sprint.</p>
+            <form method="post">
+                {% csrf_token %}
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="password" name="password1" placeholder="Password" required>
+                <input type="password" name="password2" placeholder="Confirm Password" required>
+
+                <button type="submit">Create Account</button>
+            </form>
+            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+        </div>
+    </body>
+</html>
