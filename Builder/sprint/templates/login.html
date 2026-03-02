@@ -7,11 +7,12 @@
             body { font-family: Arial; background-color: #E6F5EA; display: flex; justify-content: center; align-items: center; height: 100vh; }
             body::before{
                 content:"";
-                position:absolute;
+                position:fixed;
                 inset:0;
-                 background: url("{% static 'images/background.webp' %}") no-repeat center center/cover;
-                filter: blur(1.2px);
-                transform: scale(1.1); /* prevents blur edges */
+                background: url("{% static 'images/background.webp' %}") no-repeat center center;
+                background-size: 105% auto; /* slight zoom */
+                filter: blur(1px);
+                transform: scale(1); /* prevents blur edges */
                 z-index: -1;
             }
             .brand {
@@ -41,7 +42,7 @@
 
             .forgot {
                 margin-top: 10px;
-                font-size: 13px;
+                font-size: 14px;
             }
 
             .forgot a {
@@ -53,10 +54,11 @@
                 text-decoration: underline;
             }
 
-            .login-box { background: white; padding: 40px; border-radius: 14px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px;text-align:center; }
+            .login-box { background: white; padding: 60px; border-radius: 14px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px;text-align:center; }
             input { width: 100%; padding: 10px; margin: 10px 0; }
-            button { background: #43A047; color: white; padding: 10px; width: 100%; border: none; border-radius: 4px; cursor: pointer; }
+            button { background: #43A047; color: white; padding: 10px; margin-top:15px; width: 90%; border: none; border-radius: 4px; cursor: pointer; }
             button:hover { background: #2E7D32; opacity:0.9; }
+            .signup{color:#43A047; text-decoration:none}
         </style>
     </head>
     <body>
@@ -77,7 +79,7 @@
             <hr>
 
             <p>Don't have an account? 
-                <a href="{% url 'signup' %}">Sign up</a>
+                <a href="{% url 'signup' %}" class="signup">Sign up</a>
             </p>
             <p class='forgot'>
                 <a href='#'>Forgot password?</p>

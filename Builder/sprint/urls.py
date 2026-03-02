@@ -1,6 +1,6 @@
 from django.urls import path
 from . import views
-from .views import CustomLogoutView
+from django.contrib.auth.views import LogoutView
 from django.contrib.auth import views as auth_views
 from .views import leaderboard_view
 urlpatterns = [
@@ -13,7 +13,7 @@ urlpatterns = [
     path('update-my-sprint/', views.update_my_sprint, name='update_my_sprint'),
     path('sprint-history/', views.sprint_history_view, name='sprint_history'),
     path('leaderboard/', leaderboard_view, name='leaderboard'),
-    path('logout/', CustomLogoutView.as_view(next_page='login'), name='logout'),
+    path('logout/', LogoutView.as_view(), name='logout'),
     
 
 ]

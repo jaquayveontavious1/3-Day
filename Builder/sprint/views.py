@@ -75,7 +75,7 @@ def dashboard_view(request):
 
 @login_required
 def dashboard_view(request):
-    sprints = Sprint.objects.filter(status='ACTIVE', visibility='public').select_related('user')
+    sprints = Sprint.objects.filter(status='ACTIVE', visibility='public').select_related('user').order_by('-id')
     sprint_data = []
 
     for sprint in sprints:

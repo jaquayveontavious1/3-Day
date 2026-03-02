@@ -6,17 +6,19 @@
         <style>
             body::before{
                 content:"";
-                position:absolute;
+                position:fixed;
                 inset:0;
-                 background: url("{% static 'images/background.webp' %}") no-repeat center center/cover;
+                 background: url("{% static 'images/background.webp' %}") no-repeat center center;
+                 background-size: 105% auto;
                 filter: blur(1.2px);
-                transform: scale(1.1); /* prevents blur edges */
+                transform: scale(1); /* prevents blur edges */
                 z-index: -1;
+                
             }
             body { font-family: Arial; background-color: #E6F5EA; display: flex; justify-content: center; align-items: center; height: 100vh; }
-            .signup-box { background: white; padding: 40px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
+            .signup-box { background: white; padding: 60px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); width: 300px; }
             input { width: 100%; padding: 10px; margin: 10px 0; }
-            button { background: #43A047; color: white; padding: 10px; width: 100%; border: none; border-radius: 4px; cursor: pointer; }
+            button { background: #43A047; color: white; padding: 10px; margin-left:20px;width: 90%; border: none; border-radius: 4px; cursor: pointer; }
             button:hover { background: #2E7D32; }
             .login-link {
                 color: #2ecc71;
@@ -33,6 +35,12 @@
                 margin-bottom:10px;
                 font-size:26px;
             
+            }
+            .login{color:#43A047; margin-left:8px; text-decoration:none;}
+            .already {
+                margin-top:20px;
+                margin-left:16px;
+                font-size:15px;
             }
         </style>
     </head>
@@ -52,7 +60,7 @@
 
                 <button type="submit">Create Account</button>
             </form>
-            <p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+            <p class="already">Already have an account? <a href="{% url 'login' %}" class="login">Login</a></p>
         </div>
     </body>
 </html>
